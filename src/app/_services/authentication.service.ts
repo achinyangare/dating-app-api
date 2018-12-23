@@ -21,4 +21,8 @@ export class AuthenticationService {
             })
         );
     }
+
+    register(model: any) {
+        return this.httpClient.post(this.baseUrl + 'register', model);
+    }
 }
