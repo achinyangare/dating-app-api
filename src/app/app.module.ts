@@ -1,22 +1,33 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { JwtModule } from '@auth0/angular-jwt';
+import { RouterModule } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
+import { BsDropdownModule, TabsModule } from 'ngx-bootstrap';
+import { NgxGalleryModule } from 'ngx-gallery';
 
 import { AppComponent } from './app.component';
-import { HttpClientModule } from '@angular/common/http';
 import { NavComponent } from './nav/nav.component';
-import { FormsModule } from '@angular/forms';
 import { AuthenticationService } from './_services/authentication.service';
 import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
 import { ErrorInterceptorProvider } from './_services/error.interceptor';
 import { AlertifyService } from './_services/alertify.service';
-import { BsDropdownModule } from 'ngx-bootstrap';
-import { MemberListComponent } from './member-list/member-list.component';
+import { MemberListComponent } from './members/member-list/member-list.component';
 import { ListsComponent } from './lists/lists.component';
 import { MessagesComponent } from './messages/messages.component';
-import {RouterModule} from '@angular/router';
-import {AppRoutes} from './app.routes';
-import {AuthenticationGuard} from './_guards/authentication.guard';
+import { AppRoutes } from './app.routes';
+import { AuthenticationGuard } from './_guards/authentication.guard';
+import { UserService } from './_services/user.service';
+import { MemberCardComponent } from './members/member-card/member-card.component';
+import { MemberDetailComponent } from './members/member-detail/member-detail.component';
+import { MemberDetailResolver } from './_resolvers/member-detail.resolver';
+import { MemberListResolver } from './_resolvers/member-list.resolver';
+
+export function tokenGetter() {
+    return localStorage.getItem('token');
+}
 
 @NgModule({
     declarations: [
@@ -26,20 +37,34 @@ import {AuthenticationGuard} from './_guards/authentication.guard';
         RegisterComponent,
         MemberListComponent,
         ListsComponent,
-        MessagesComponent
+        MessagesComponent,
+        MemberCardComponent,
+        MemberDetailComponent
     ],
     imports: [
         BrowserModule,
         HttpClientModule,
         FormsModule,
+        NgxGalleryModule,
         BsDropdownModule.forRoot(),
-        RouterModule.forRoot(AppRoutes)
+        TabsModule.forRoot(),
+        RouterModule.forRoot(AppRoutes),
+        JwtModule.forRoot({
+            config: {
+                tokenGetter: tokenGetter,
+                whitelistedDomains: ['localhost:5000'],
+                blacklistedRoutes: ['localhost:5000/api/authentication/']
+            }
+        })
     ],
     providers: [
         AuthenticationService,
         ErrorInterceptorProvider,
         AlertifyService,
-        AuthenticationGuard
+        AuthenticationGuard,
+        UserService,
+        MemberDetailResolver,
+        MemberListResolver
     ],
     bootstrap: [AppComponent]
 })
