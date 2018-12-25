@@ -6,17 +6,17 @@ import {ListsComponent} from './lists/lists.component';
 import {AuthenticationGuard} from './_guards/authentication.guard';
 
 export const AppRoutes: Routes = [
-    {path: '', component: HomeComponent},
+    { path: '', component: HomeComponent },
     {
         path: '',
         runGuardsAndResolvers: 'always',
         canActivate: [AuthenticationGuard],
         children: [
-            {path: 'members', component: MemberListComponent, canActivate: [AuthenticationGuard]},
-            {path: 'messages', component: MessagesComponent},
-            {path: 'lists', component: ListsComponent}
+            { path: 'members', component: MemberListComponent },
+            { path: 'messages', component: MessagesComponent },
+            { path: 'lists', component: ListsComponent }
         ]
     },
-    {path: '**', redirectTo: '', pathMatch: 'full'},
+    { path: '**', redirectTo: '', pathMatch: 'full' },
 ];
 
