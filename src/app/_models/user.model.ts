@@ -11,7 +11,7 @@ export class User {
     photoUrl: string;
     city: string;
     country: string;
-    intrests?: string;
+    interests?: string;
     introduction?: string;
     lookingFor?: string;
     photos?: Photo[];
