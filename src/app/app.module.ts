@@ -3,8 +3,8 @@ import {NgModule} from '@angular/core';
 import {JwtModule} from '@auth0/angular-jwt';
 import {RouterModule} from '@angular/router';
 import {HttpClientModule} from '@angular/common/http';
-import {FormsModule} from '@angular/forms';
-import {BsDropdownModule, TabsModule} from 'ngx-bootstrap';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {BsDatepickerModule, BsDropdownModule, TabsModule} from 'ngx-bootstrap';
 import {NgxGalleryModule} from 'ngx-gallery';
 import {FileUploadModule} from 'ng2-file-upload';
 
@@ -53,6 +53,8 @@ export function tokenGetter() {
         HttpClientModule,
         FormsModule,
         NgxGalleryModule,
+        ReactiveFormsModule,
+        BsDatepickerModule.forRoot(),
         BsDropdownModule.forRoot(),
         TabsModule.forRoot(),
         RouterModule.forRoot(AppRoutes),
