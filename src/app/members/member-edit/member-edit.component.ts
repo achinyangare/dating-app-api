@@ -14,6 +14,7 @@ import {AuthenticationService} from '../../_services/authentication.service';
 export class MemberEditComponent implements OnInit {
 
     user: User;
+    photoUrl: string;
 
     @ViewChild('editForm') editForm: NgForm;
 
@@ -35,14 +36,19 @@ export class MemberEditComponent implements OnInit {
         this.activatedRoute.data.subscribe(data => {
             this.user = data['user'];
         });
+        this.authenticationService.currentPhotoUrl.subscribe(photoUrl => this.photoUrl = photoUrl);
     }
 
     updateUser() {
-        this.userService.updateUser(this.authenticationService.decodedToken.nameid, this.user).subscribe(() => {
+        this.userService.updateUser(+this.authenticationService.decodedToken.nameid, this.user).subscribe(() => {
             this.alertifyService.success('Profile updated successfully');
             this.editForm.reset(this.user);
         }, error => {
             this.alertifyService.error(error);
         });
+    }
+
+    updateMainPhoto(photoUrl: string) {
+        this.user.photoUrl = photoUrl;
     }
 }
