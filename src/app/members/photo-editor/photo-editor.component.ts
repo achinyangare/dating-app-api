@@ -59,7 +59,6 @@ export class PhotoEditorComponent implements OnInit {
                     description: apiResponse.description,
                     isMain: apiResponse.isMain
                 };
-
                 this.photos.push(photo);
                 if (photo.isMain) {
                     this.authenticationService.changeMemberPhoto(photo.url);
@@ -71,7 +70,7 @@ export class PhotoEditorComponent implements OnInit {
     }
 
     setMainPhoto(photo: Photo) {
-        this.userService.setMainPhoto(+this.authenticationService.decodedToken.nameid, photo.id).subscribe(response => {
+        this.userService.setMainPhoto(+this.authenticationService.decodedToken.nameid, photo.id).subscribe(() => {
             this.currentMainPhoto = this.photos.filter(p => p.isMain === true)[0];
             this.currentMainPhoto.isMain = false;
             photo.isMain = true;
@@ -84,7 +83,7 @@ export class PhotoEditorComponent implements OnInit {
     }
 
     deletePhoto(id: number) {
-        this.alertifyService.confirm('Are you sure you want to delte this photo?', () => {
+        this.alertifyService.confirm('Are you sure you want to delete this photo?', () => {
             this.userService.deletePhoto(+this.authenticationService.decodedToken.nameid, id).subscribe(() => {
                 this.photos.splice(this.photos.findIndex(p => p.id === id), 1);
                 this.alertifyService.success('Photo has been deleted');

@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {AuthenticationService} from '../_services/authentication.service';
 import {AlertifyService} from '../_services/alertify.service';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {BsDatepickerConfig} from 'ngx-bootstrap';
 import {User} from '../_models/user.model';
 import {Router} from '@angular/router';

@@ -31,7 +31,7 @@ export class NavComponent implements OnInit {
             }, error => {
                 this.alertifyService.error(error);
             }, () => {
-                this.router.navigate(['/members']);
+                this.router.navigate(['/members']).then();
             });
     }
 
@@ -45,6 +45,6 @@ export class NavComponent implements OnInit {
         this.authenticationService.decodedToken = null;
         this.authenticationService.currentUser = null;
         this.alertifyService.message('logged out');
-        this.router.navigate(['/home']);
+        this.router.navigate(['/home']).then();
     }
 }

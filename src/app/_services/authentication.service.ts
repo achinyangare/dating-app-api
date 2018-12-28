@@ -25,15 +25,15 @@ export class AuthenticationService {
         this.photoUrl.next(photoUrl);
     }
 
-    login(model: any) {
-        return this.httpClient.post(this.baseUrl + 'login', model).pipe(
+    login(user: User) {
+        return this.httpClient.post(this.baseUrl + 'login', user).pipe(
             map((response: any) => {
-                const user = response;
-                if (user) {
-                    localStorage.setItem('token', user.token);
-                    localStorage.setItem('user', JSON.stringify(user.user));
-                    this.decodedToken = this.jwtHelperService.decodeToken(user.token);
-                    this.currentUser = user.user;
+                const localUser = response;
+                if (localUser) {
+                    localStorage.setItem('token', localUser.token);
+                    localStorage.setItem('user', JSON.stringify(localUser.user));
+                    this.decodedToken = this.jwtHelperService.decodeToken(localUser.token);
+                    this.currentUser = localUser.user;
                     this.changeMemberPhoto(this.currentUser.photoUrl);
                 }
             })
