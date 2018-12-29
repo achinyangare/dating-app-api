@@ -6,6 +6,7 @@ import {environment} from '../../environments/environment';
 import {User} from '../_models/user.model';
 import {DecodedToken} from '../_models/decoded-token.model';
 import {BehaviorSubject} from 'rxjs';
+import {LoginUser} from '../_models/login-user.model';
 
 @Injectable({
     providedIn: 'root'
@@ -25,8 +26,10 @@ export class AuthenticationService {
         this.photoUrl.next(photoUrl);
     }
 
-    login(user: User) {
-        return this.httpClient.post(this.baseUrl + 'login', user).pipe(
+    login(loginUser: LoginUser) {
+        console.log('in ServiceLogin');
+        console.log(loginUser);
+        return this.httpClient.post(this.baseUrl + 'login', loginUser).pipe(
             map((response: any) => {
                 const localUser = response;
                 if (localUser) {

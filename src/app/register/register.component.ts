@@ -5,6 +5,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {BsDatepickerConfig} from 'ngx-bootstrap';
 import {User} from '../_models/user.model';
 import {Router} from '@angular/router';
+import {LoginUser} from '../_models/login-user.model';
 
 @Component({
     selector: 'app-register',
@@ -15,7 +16,8 @@ export class RegisterComponent implements OnInit {
 
     @Output() cancelRegister = new EventEmitter<boolean>();
     registerForm: FormGroup;
-    user: User;
+    user: User = new User();
+    loginUser: LoginUser = new LoginUser();
     bsConfig: Partial<BsDatepickerConfig>;
 
     constructor(
@@ -54,23 +56,29 @@ export class RegisterComponent implements OnInit {
     register() {
         if (this.registerForm.valid) {
             this.user = Object.assign({}, this.registerForm.value);
+            this.updateLoginUser(this.user);
             this.authenticationService.register(this.user).subscribe(() => {
                 this.alertifyService.success('Registration successful');
             }, error => {
                 this.alertifyService.error(error);
             }, () => {
-                this.authenticationService.login(this.user).subscribe(() => {
+                console.log('Trying to login');
+                this.authenticationService.login(this.loginUser).subscribe(() => {
                     this.router.navigate(['/members']).then();
                 });
             });
         }
-        // this.authenticationService.register(this.model).subscribe(
+        // this.authenticationService.register(this.loginUser).subscribe(
         //     () => {
         //         this.alertifyService.success('registration successful');
         //     }, error => {
         //         this.alertifyService.error(error);
         //     }
         // );
+    }
+
+    updateLoginUser(user: User) {
+        this.loginUser.username = user.username;
     }
 
     cancel() {

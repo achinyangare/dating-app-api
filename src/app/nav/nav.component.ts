@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {AuthenticationService} from '../_services/authentication.service';
 import {AlertifyService} from '../_services/alertify.service';
 import {Router} from '@angular/router';
+import {LoginUser} from '../_models/login-user.model';
 
 @Component({
     selector: 'app-nav',
@@ -10,13 +11,13 @@ import {Router} from '@angular/router';
 })
 export class NavComponent implements OnInit {
 
-    model: any = {};
     photoUrl: string;
+    loginUser: LoginUser = new LoginUser();
 
     constructor(
         private router: Router,
         private alertifyService: AlertifyService,
-        private authenticationService: AuthenticationService
+        public authenticationService: AuthenticationService
     ) {
     }
 
@@ -25,7 +26,7 @@ export class NavComponent implements OnInit {
     }
 
     login() {
-        this.authenticationService.login(this.model).subscribe(
+        this.authenticationService.login(this.loginUser).subscribe(
             () => {
                 this.alertifyService.success('Logged in successfully');
             }, error => {
